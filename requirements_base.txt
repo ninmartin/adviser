@@ -3,7 +3,7 @@ lxml==4.8.0
 numpy==1.22.3
 PyInquirer==1.0.3
 pyzmq==22.3.0
-requests==2.27.1
+requests==2.31.0
 tensorboard==2.8.0
 torch==1.11.0
 tornado==6.1
