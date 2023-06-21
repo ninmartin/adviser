@@ -47,11 +47,11 @@ rule inform(category)
     "{synonyms("category", category)}{WBG()}"
     "(\\ |^){synonyms("category", category)}(\\ (please|and))*"
 
-rule inform(ability1)
-    # "\\\\b{ability1}\\\\b"
-    "{rINFORM()} {synonyms("ability1", ability1)}"
-    "{synonyms("ability1", ability1)}{WBG()}"
-    "(\\ |^){synonyms("ability1", ability1)}(\\ (please|and))*"
+rule inform(ability)
+    # "\\\\b{ability}\\\\b"
+    "{rINFORM()} {synonyms("ability", ability)}"
+    "{synonyms("ability", ability)}{WBG()}"
+    "(\\ |^){synonyms("ability", ability)}(\\ (please|and))*"
 
 rule inform(ability2)
     # "\\\\b{ability1}\\\\b"
