@@ -1,0 +1,275 @@
+# general rules
+
+rule hello(): "(\\b|^|\\ )(hi|hello|howdy|hey)\\b"
+rule bye(): "(\\b|^|\\ )(bye(-)?(bye)?|good(-)?bye|that'?s?\\ (is\\ )*all)(\\s|$|\\ |\\.)"
+rule deny(): "((\\b|^|\\ )(n(o)?|wrong|incorrect|error|nope)|(not\\ (true|correct|right)))(\\s)?$"
+rule affirm(): "((yes|yeah|(\\b|^)ok\\b|(\\b|^)OK|okay|sure|^y$|(\\b|^)yep(\\b|$)|(that('?s| is) )?(?<!not\\ )(?<!no\\ )(right|correct|confirm)))(\\s)?$"
+rule thanks(): "(?=.*(^(\\ )*)(((great|good|awesome|nice|cool)\\ )?((that((')?s|\\ (is|was))\\ (very\\ )?helpful)\\ )?(thank|thank(s|\\ you)(\\ (very|so)\\ much)?)(\\ (that((')?s|\\ (is|was))\\ (very\\ )?helpful))?|((great|good|awesome|nice|cool)\\ )?(that((')?s|\\ (is|was))\\ (very\\ )?helpful)|(great|good|awesome|nice|cool))((\\ )*))(?=^(?:(?!bye).)*$).*$"
+rule repeat(): "(\\b|^|\\ )(repeat((\\ that )|(\\ it))?)|(say((\\ that )|(\\ it))\\ again)|(again)"
+rule reqalts(): "(\\b|^|\\ )((something|anything)\\ else)|(different(\\ one)*)|(another\\ one)|(alternatives*)|(other options*)|((don'*t|do not) (want|like)\\ (that|this)(\\ one)*)"
+rule ack(): "{IMPOSSIBLEREGEX()}"
+rule bad(): "{IMPOSSIBLEREGEX()}"
+
+# user informable slots are name, department and position
+
+rule inform(name)
+    "{rINFORM()} {synonyms("name", name)}"
+    "{synonyms("name", name)}{WBG()}"
+    "(\\ |^){synonyms("name", name)}(\\ (please|and))*"
+
+rule inform(height)
+    # "\\\\b{height}\\\\b"
+    "{rINFORM()} {synonyms("height", height)}"
+    "{synonyms("height", height)}{WBG()}"
+    "(\\ |^){synonyms("height", height)}(\\ (please|and))*"
+
+rule inform(weight)
+    # "\\\\b{weight}\\\\b"
+    "{rINFORM()} {synonyms("weight", weight)}"
+    "{synonyms("weight", weight)}{WBG()}"
+    "(\\ |^){synonyms("weight", weight)}(\\ (please|and))*"
+
+rule inform(male)
+    # "\\\\b{male}\\\\b"
+    "{rINFORM()} {synonyms("male", male)}"
+    "{synonyms("male", male)}{WBG()}"
+    "(\\ |^){synonyms("male", male)}(\\ (please|and))*"
+
+rule inform(female)
+    # "\\\\b{female}\\\\b"
+    "{rINFORM()} {synonyms("female", female)}"
+    "{synonyms("female", female)}{WBG()}"
+    "(\\ |^){synonyms("female", female)}(\\ (please|and))*"
+
+rule inform(category)
+    # "\\\\b{category}\\\\b"
+    "{rINFORM()} {synonyms("category", category)}"
+    "{synonyms("category", category)}{WBG()}"
+    "(\\ |^){synonyms("category", category)}(\\ (please|and))*"
+
+rule inform(ability1)
+    # "\\\\b{ability1}\\\\b"
+    "{rINFORM()} {synonyms("ability1", ability1)}"
+    "{synonyms("ability1", ability1)}{WBG()}"
+    "(\\ |^){synonyms("ability1", ability1)}(\\ (please|and))*"
+
+rule inform(ability2)
+    # "\\\\b{ability1}\\\\b"
+    "{rINFORM()} {synonyms("ability2", ability2)}"
+    "{synonyms("ability2", ability2)}{WBG()}"
+    "(\\ |^){synonyms("ability2", ability2)}(\\ (please|and))*"
+
+rule inform(type1)
+    # "\\\\b{type1}\\\\b"
+    "{rINFORM()} {synonyms("type1", type1)}"
+    "{synonyms("type1", type1)}{WBG()}"
+    "(\\ |^){synonyms("type1", type1)}(\\ (please|and))*"
+
+rule inform(type2)
+    # "\\\\b{type2}\\\\b"
+    "{rINFORM()} {synonyms("type2", type2)}"
+    "{synonyms("type2", type2)}{WBG()}"
+    "(\\ |^){synonyms("type2", type2)}(\\ (please|and))*"
+
+rule inform(weakness1)
+    # "\\\\b{weakness1}\\\\b"
+    "{rINFORM()} {synonyms("weakness1", weakness1)}"
+    "{synonyms("weakness1", weakness1)}{WBG()}"
+    "(\\ |^){synonyms("weakness1", weakness1)}(\\ (please|and))*"
+
+rule inform(weakness2)
+    # "\\\\b{weakness2}\\\\b"
+    "{rINFORM()} {synonyms("weakness2", weakness2)}"
+    "{synonyms("weakness2", weakness2)}{WBG()}"
+    "(\\ |^){synonyms("weakness2", weakness2)}(\\ (please|and))*"
+
+rule inform(weakness3)
+    # "\\\\b{weakness3}\\\\b"
+    "{rINFORM()} {synonyms("weakness3", weakness3)}"
+    "{synonyms("weakness3", weakness3)}{WBG()}"
+    "(\\ |^){synonyms("weakness3", weakness3)}(\\ (please|and))*"
+
+rule inform(weakness4)
+    # "\\\\b{weakness4}\\\\b"
+    "{rINFORM()} {synonyms("weakness4", weakness4)}"
+    "{synonyms("weakness4", weakness4)}{WBG()}"
+    "(\\ |^){synonyms("weakness4", weakness4)}(\\ (please|and))*"
+
+rule inform(weakness5)
+    # "\\\\b{weakness5}\\\\b"
+    "{rINFORM()} {synonyms("weakness5", weakness5)}"
+    "{synonyms("weakness5", weakness5)}{WBG()}"
+    "(\\ |^){synonyms("weakness5", weakness5)}(\\ (please|and))*"
+
+rule inform(weakness6)
+    # "\\\\b{weakness6}\\\\b"
+    "{rINFORM()} {synonyms("weakness6", weakness6)}"
+    "{synonyms("weakness6", weakness6)}{WBG()}"
+    "(\\ |^){synonyms("weakness6", weakness6)}(\\ (please|and))*"
+
+rule inform(weakness7)
+    # "\\\\b{weakness7}\\\\b"
+    "{rINFORM()} {synonyms("weakness7", weakness7)}"
+    "{synonyms("weakness7", weakness7)}{WBG()}"
+    "(\\ |^){synonyms("weakness7", weakness7)}(\\ (please|and))*"
+
+# All slots are requestable
+
+
+rule request(name)
+    "{rREQUEST()} {slot_synonyms("name")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("name")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("name")}"
+    "{WANT()}.*{slot_synonyms("name")}"
+    "(the )?{slot_synonyms("name")}"
+
+rule request(height)
+    "{rREQUEST()} {slot_synonyms("height")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("height")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("height")}"
+    "{WANT()}.*{slot_synonyms("height")}"
+    "(the )?{slot_synonyms("height")}"
+
+rule request(weight)
+    "{rREQUEST()} {slot_synonyms("weight")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weight")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weight")}"
+    "{WANT()}.*{slot_synonyms("weight")}"
+    "(the )?{slot_synonyms("weight")}"
+
+rule request(male)
+    "{rREQUEST()} {slot_synonyms("male")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("male")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("male")}"
+    "{WANT()}.*{slot_synonyms("male")}"
+    "(the )?{slot_synonyms("male")}"
+
+rule request(female)
+    "{rREQUEST()} {slot_synonyms("female")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("female")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("female")}"
+    "{WANT()}.*{slot_synonyms("female")}"
+    "(the )?{slot_synonyms("female")}"
+
+rule request(category)
+    "{rREQUEST()} {slot_synonyms("category")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("category")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("category")}"
+    "{WANT()}.*{slot_synonyms("category")}"
+    "(the )?{slot_synonyms("category")}"
+
+rule request(ability1)
+    "{rREQUEST()} {slot_synonyms("ability1")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("ability1")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("ability1")}"
+    "{WANT()}.*{slot_synonyms("ability1")}"
+    "(the )?{slot_synonyms("ability1")}"
+
+rule request(ability2)
+    "{rREQUEST()} {slot_synonyms("ability2")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("ability2")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("ability2")}"
+    "{WANT()}.*{slot_synonyms("ability2")}"
+    "(the )?{slot_synonyms("ability2")}"
+
+rule request(type1)
+    "{rREQUEST()} {slot_synonyms("type1")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("type1")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("type1")}"
+    "{WANT()}.*{slot_synonyms("type1")}"
+    "(the )?{slot_synonyms("type1")}"
+
+rule request(type2)
+    "{rREQUEST()} {slot_synonyms("type2")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("type2")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("type2")}"
+    "{WANT()}.*{slot_synonyms("type2")}"
+    "(the )?{slot_synonyms("type2")}"
+
+rule request(weakness1)
+    "{rREQUEST()} {slot_synonyms("weakness1")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness1")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness1")}"
+    "{WANT()}.*{slot_synonyms("weakness1")}"
+    "(the )?{slot_synonyms("weakness1")}"
+
+rule request(weakness2)
+    "{rREQUEST()} {slot_synonyms("weakness2")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness2")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness2")}"
+    "{WANT()}.*{slot_synonyms("weakness2")}"
+    "(the )?{slot_synonyms("weakness2")}"
+
+rule request(weakness3)
+    "{rREQUEST()} {slot_synonyms("weakness3")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness3")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness3")}"
+    "{WANT()}.*{slot_synonyms("weakness3")}"
+    "(the )?{slot_synonyms("weakness3")}"
+
+rule request(weakness4)
+    "{rREQUEST()} {slot_synonyms("weakness4")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness4")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness4")}"
+    "{WANT()}.*{slot_synonyms("weakness4")}"
+    "(the )?{slot_synonyms("weakness4")}"
+
+rule request(weakness5)
+    "{rREQUEST()} {slot_synonyms("weakness5")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness5")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness5")}"
+    "{WANT()}.*{slot_synonyms("weakness5")}"
+    "(the )?{slot_synonyms("weakness5")}"
+
+rule request(weakness6)
+    "{rREQUEST()} {slot_synonyms("weakness6")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness6")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness6")}"
+    "{WANT()}.*{slot_synonyms("weakness6")}"
+    "(the )?{slot_synonyms("weakness6")}"
+
+rule request(weakness7)
+    "{rREQUEST()} {slot_synonyms("weakness7")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness7")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness7")}"
+    "{WANT()}.*{slot_synonyms("weakness7")}"
+    "(the )?{slot_synonyms("weakness7")}"
+
+
+# synonyms
+
+function slot_synonyms(slot)
+    "{IMPOSSIBLEREGEX()}"
+
+    if slot = "ability1"
+        "ability1"
+        "ability"
+    if slot = "type1"
+        "type1"
+        "type"
+    if slot = "weakness1"
+        "weakness1"
+        "weakness"
+
+
+# constants
+
+function domain_vocab(): "(pokemon|pokemons)"
+function IMPOSSIBLEREGEX(): "^\b$"
+function WHAT(): "(what(\\')?(s)?|which|does|where)(\\ (its|the))*"
+function IT(): "(it\\'*s*|it\\ have|is\\ it\\'*s*|is\\ (the|their))(\\ for)*"
+function CYTM(): "(can\\ you\\ tell\\ me\\ (the|it\\'*s|their))"
+function CIG(): "(can\\ I\\ get\\ (the|it\\'*s|their))"
+function NEGATE(): "((i\\ )*(don\\'?t|do\\ not|does\\ not|does\\'?nt)\\ (care|mind|matter)(\\ (about|what))*(\\ (the|it\\'?s*))*)"
+# Cant create variable lengths with negative lookback... else merge following:
+function DONTCARE(): "(i\\ dont\\ care)"
+function DONTCAREWHAT(): "(i\\ dont\\ care\\ what\\ )"
+function DONTCAREABOUT(): "(i\\ dont\\ care\\ about\\ )"
+function rREQUEST(): "(\\\\b|^|\\ )(?<!{DONTCARE()})({WHAT()}\\ {IT()}|{CYTM()}|{CIG()})"
+function WANT(): "(what\\ about|want|have|need|looking\\ for|used\\ for)(\\ a(n)?)*"
+function WBG(): "(\\ ((would|seems\\ to)\\ be\\ (good|nice)($|[^\\?]$)|seems\\ (good|nice)($|[^\\?]$)))"
+function rINFORM(): "(\\\\b|^|\\ ){WANT()}"
+function rINFORM_DONTCARE(): "{DONTCARE()} ((what|which|about)(\\ (it\\'*s*|the))*)+"
+function rINFORM_DONTWANT(): "(((i\\ )*(don\\'*t\\ want))|it\\ (shouldn\\'*t|should\\ not)\\ (have|be))+"
+# Contextual dontcares: i.e things that should be labelled inform(=dontcare)
+function rCONTEXTUAL_DONTCARE(): "(anything(?!\\ else)|((any$|any\\ kind)|(i\\ )*(don\\'?t|do\\ not)\\ (care|know))($|(?!\\ (a?bout|of|what))|(\\ (a?bout|of|what)\\ (type|kind)(?!\\ of))|\\ a?bout\\ (that|this))|(any(thing)?\\ (is\\ )*(fine|ok\\\\b|okay|will\\ do))($|\\ and|\\ but)|(it )?(doesn\\'?t|does not) matter)+"
