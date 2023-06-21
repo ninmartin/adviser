@@ -12,6 +12,11 @@ rule bad(): "{IMPOSSIBLEREGEX()}"
 
 # user informable slots are name, department and position
 
+rule inform(id)
+    "{rINFORM()} {synonyms("id", id)}"
+    "{synonyms("id", id)}{WBG()}"
+    "(\\ |^){synonyms("id", id)}(\\ (please|and))*"
+
 rule inform(name)
     "{rINFORM()} {synonyms("name", name)}"
     "{synonyms("name", name)}{WBG()}"
@@ -47,74 +52,33 @@ rule inform(category)
     "{synonyms("category", category)}{WBG()}"
     "(\\ |^){synonyms("category", category)}(\\ (please|and))*"
 
-rule inform(ability)
-    # "\\\\b{ability}\\\\b"
-    "{rINFORM()} {synonyms("ability", ability)}"
-    "{synonyms("ability", ability)}{WBG()}"
-    "(\\ |^){synonyms("ability", ability)}(\\ (please|and))*"
+rule inform(abilities)
+    # "\\\\b{abilities}\\\\b"
+    "{rINFORM()} {synonyms("abilities", abilities)}"
+    "{synonyms("abilities", abilities)}{WBG()}"
+    "(\\ |^){synonyms("abilities", abilities)}(\\ (please|and))*"
 
-rule inform(ability2)
-    # "\\\\b{ability1}\\\\b"
-    "{rINFORM()} {synonyms("ability2", ability2)}"
-    "{synonyms("ability2", ability2)}{WBG()}"
-    "(\\ |^){synonyms("ability2", ability2)}(\\ (please|and))*"
+rule inform(types)
+    # "\\\\b{types}\\\\b"
+    "{rINFORM()} {synonyms("types", types)}"
+    "{synonyms("types", types)}{WBG()}"
+    "(\\ |^){synonyms("types", types)}(\\ (please|and))*"
 
-rule inform(type1)
-    # "\\\\b{type1}\\\\b"
-    "{rINFORM()} {synonyms("type1", type1)}"
-    "{synonyms("type1", type1)}{WBG()}"
-    "(\\ |^){synonyms("type1", type1)}(\\ (please|and))*"
+rule inform(weaknesses)
+    # "\\\\b{weaknesses}\\\\b"
+    "{rINFORM()} {synonyms("weaknesses", weaknesses)}"
+    "{synonyms("weaknesses", weaknesses)}{WBG()}"
+    "(\\ |^){synonyms("weaknesses", weaknesses)}(\\ (please|and))*"
 
-rule inform(type2)
-    # "\\\\b{type2}\\\\b"
-    "{rINFORM()} {synonyms("type2", type2)}"
-    "{synonyms("type2", type2)}{WBG()}"
-    "(\\ |^){synonyms("type2", type2)}(\\ (please|and))*"
-
-rule inform(weakness1)
-    # "\\\\b{weakness1}\\\\b"
-    "{rINFORM()} {synonyms("weakness1", weakness1)}"
-    "{synonyms("weakness1", weakness1)}{WBG()}"
-    "(\\ |^){synonyms("weakness1", weakness1)}(\\ (please|and))*"
-
-rule inform(weakness2)
-    # "\\\\b{weakness2}\\\\b"
-    "{rINFORM()} {synonyms("weakness2", weakness2)}"
-    "{synonyms("weakness2", weakness2)}{WBG()}"
-    "(\\ |^){synonyms("weakness2", weakness2)}(\\ (please|and))*"
-
-rule inform(weakness3)
-    # "\\\\b{weakness3}\\\\b"
-    "{rINFORM()} {synonyms("weakness3", weakness3)}"
-    "{synonyms("weakness3", weakness3)}{WBG()}"
-    "(\\ |^){synonyms("weakness3", weakness3)}(\\ (please|and))*"
-
-rule inform(weakness4)
-    # "\\\\b{weakness4}\\\\b"
-    "{rINFORM()} {synonyms("weakness4", weakness4)}"
-    "{synonyms("weakness4", weakness4)}{WBG()}"
-    "(\\ |^){synonyms("weakness4", weakness4)}(\\ (please|and))*"
-
-rule inform(weakness5)
-    # "\\\\b{weakness5}\\\\b"
-    "{rINFORM()} {synonyms("weakness5", weakness5)}"
-    "{synonyms("weakness5", weakness5)}{WBG()}"
-    "(\\ |^){synonyms("weakness5", weakness5)}(\\ (please|and))*"
-
-rule inform(weakness6)
-    # "\\\\b{weakness6}\\\\b"
-    "{rINFORM()} {synonyms("weakness6", weakness6)}"
-    "{synonyms("weakness6", weakness6)}{WBG()}"
-    "(\\ |^){synonyms("weakness6", weakness6)}(\\ (please|and))*"
-
-rule inform(weakness7)
-    # "\\\\b{weakness7}\\\\b"
-    "{rINFORM()} {synonyms("weakness7", weakness7)}"
-    "{synonyms("weakness7", weakness7)}{WBG()}"
-    "(\\ |^){synonyms("weakness7", weakness7)}(\\ (please|and))*"
 
 # All slots are requestable
 
+rule request(id)
+    "{rREQUEST()} {slot_synonyms("id")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("id")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("id")}"
+    "{WANT()}.*{slot_synonyms("id")}"
+    "(the )?{slot_synonyms("id")}"
 
 rule request(name)
     "{rREQUEST()} {slot_synonyms("name")}"
@@ -158,98 +122,72 @@ rule request(category)
     "{WANT()}.*{slot_synonyms("category")}"
     "(the )?{slot_synonyms("category")}"
 
-rule request(ability1)
-    "{rREQUEST()} {slot_synonyms("ability1")}"
-    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("ability1")}"
-    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("ability1")}"
-    "{WANT()}.*{slot_synonyms("ability1")}"
-    "(the )?{slot_synonyms("ability1")}"
+rule request(abilities)
+    "{rREQUEST()} {slot_synonyms("abilities")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("abilities")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("abilities")}"
+    "{WANT()}.*{slot_synonyms("abilities")}"
+    "(the )?{slot_synonyms("abilities")}"
 
-rule request(ability2)
-    "{rREQUEST()} {slot_synonyms("ability2")}"
-    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("ability2")}"
-    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("ability2")}"
-    "{WANT()}.*{slot_synonyms("ability2")}"
-    "(the )?{slot_synonyms("ability2")}"
+rule request(types)
+    "{rREQUEST()} {slot_synonyms("types")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("types")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("types")}"
+    "{WANT()}.*{slot_synonyms("types")}"
+    "(the )?{slot_synonyms("types")}"
 
-rule request(type1)
-    "{rREQUEST()} {slot_synonyms("type1")}"
-    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("type1")}"
-    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("type1")}"
-    "{WANT()}.*{slot_synonyms("type1")}"
-    "(the )?{slot_synonyms("type1")}"
-
-rule request(type2)
-    "{rREQUEST()} {slot_synonyms("type2")}"
-    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("type2")}"
-    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("type2")}"
-    "{WANT()}.*{slot_synonyms("type2")}"
-    "(the )?{slot_synonyms("type2")}"
-
-rule request(weakness1)
-    "{rREQUEST()} {slot_synonyms("weakness1")}"
-    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness1")}"
-    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness1")}"
-    "{WANT()}.*{slot_synonyms("weakness1")}"
-    "(the )?{slot_synonyms("weakness1")}"
-
-rule request(weakness2)
-    "{rREQUEST()} {slot_synonyms("weakness2")}"
-    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness2")}"
-    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness2")}"
-    "{WANT()}.*{slot_synonyms("weakness2")}"
-    "(the )?{slot_synonyms("weakness2")}"
-
-rule request(weakness3)
-    "{rREQUEST()} {slot_synonyms("weakness3")}"
-    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness3")}"
-    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness3")}"
-    "{WANT()}.*{slot_synonyms("weakness3")}"
-    "(the )?{slot_synonyms("weakness3")}"
-
-rule request(weakness4)
-    "{rREQUEST()} {slot_synonyms("weakness4")}"
-    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness4")}"
-    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness4")}"
-    "{WANT()}.*{slot_synonyms("weakness4")}"
-    "(the )?{slot_synonyms("weakness4")}"
-
-rule request(weakness5)
-    "{rREQUEST()} {slot_synonyms("weakness5")}"
-    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness5")}"
-    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness5")}"
-    "{WANT()}.*{slot_synonyms("weakness5")}"
-    "(the )?{slot_synonyms("weakness5")}"
-
-rule request(weakness6)
-    "{rREQUEST()} {slot_synonyms("weakness6")}"
-    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness6")}"
-    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness6")}"
-    "{WANT()}.*{slot_synonyms("weakness6")}"
-    "(the )?{slot_synonyms("weakness6")}"
-
-rule request(weakness7)
-    "{rREQUEST()} {slot_synonyms("weakness7")}"
-    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weakness7")}"
-    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weakness7")}"
-    "{WANT()}.*{slot_synonyms("weakness7")}"
-    "(the )?{slot_synonyms("weakness7")}"
+rule request(weaknesses)
+    "{rREQUEST()} {slot_synonyms("weaknesses")}"
+    "(?<!{DONTCAREWHAT()})(?<!want ){IT()} {slot_synonyms("weaknesses")}"
+    "(?<!{DONTCARE()}){WHAT()} {slot_synonyms("weaknesses")}"
+    "{WANT()}.*{slot_synonyms("weaknesses")}"
+    "(the )?{slot_synonyms("weaknesses")}"
 
 
 # synonyms
 
+function synonyms(slot, value)
+    "{value}"
+
+    add_if slot = "name"
+        if value = "Nidoran♀"
+            "Nidoran"
+        if value = "Nidoran♂"
+            "Nidoran"
+
 function slot_synonyms(slot)
     "{IMPOSSIBLEREGEX()}"
 
-    if slot = "ability1"
-        "ability1"
+    if slot = "id"
+        "id"
+        "ids"
+    if slot = "name"
+        "name"
+        "names"
+    if slot = "height"
+        "height"
+        "heights"
+    if slot = "weight"
+        "weight"
+        "weights"
+    if slot = "male"
+        "male"
+        "males"
+    if slot = "female"
+        "female"
+        "females"
+    if slot = "category"
+        "category"
+        "categories"
+    if slot = "abilities"
+        "abilities"
         "ability"
-    if slot = "type1"
-        "type1"
+    if slot = "types"
+        "types"
         "type"
-    if slot = "weakness1"
-        "weakness1"
+    if slot = "weaknesses"
         "weakness"
+        "weaknesses"
 
 
 # constants
