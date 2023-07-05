@@ -32,7 +32,7 @@ rule inform(abilities)
 
 rule inform(types)
     "The pokemon is of type {types}"
-
+ are
 rule inform(weaknesses)
     "The pokemon has the weakness {weaknesses}"
 

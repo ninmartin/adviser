@@ -109,6 +109,18 @@ def load_lecturers_domain(backchannel: bool = False):
     lect_nlg = load_nlg(backchannel=backchannel, domain=domain)
     return domain, [lect_nlu, lect_bst, lect_policy, lect_nlg]
 
+def load_pokedex_domain(backchannel: bool = False):
+    from utils.domain.jsonlookupdomain import JSONLookupDomain
+    from services.nlu.nlu import HandcraftedNLU
+    from services.nlg.nlg import HandcraftedNLG
+    from services.policy import HandcraftedPolicy
+    domain = JSONLookupDomain('pokedex', display_name="Pokedex")
+    lect_nlu = HandcraftedNLU(domain=domain)
+    lect_bst = HandcraftedBST(domain=domain)
+    lect_policy = HandcraftedPolicy(domain=domain)
+    lect_nlg = load_nlg(backchannel=backchannel, domain=domain)
+    return domain, [lect_nlu, lect_bst, lect_policy, lect_nlg]
+
 def load_qa_domain():
     from examples.qa.worldknowledge.semanticparser import QuestionParser
     from examples.qa.worldknowledge.domain import WorldKnowledgeDomain
@@ -126,7 +138,7 @@ def load_qa_domain():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='ADVISER 2.0 Dialog System')
-    parser.add_argument('domains', nargs='+', choices=['lecturers', 'weather', 'mensa', 'qa'],
+    parser.add_argument('domains', nargs='+', choices=['lecturers', 'weather', 'mensa', 'qa', 'pokedex'],
                         help="Chat domain(s). For multidomain type as list: domain1 domain2 .. \n",
                         default="ImsLecturers")
     parser.add_argument('-g', '--gui', action='store_true', help="Start Webui server")
@@ -184,6 +196,10 @@ if __name__ == "__main__":
         services.extend(w_services)
     if 'mensa' in args.domains:
         m_domain, m_services = load_mensa_domain(backchannel=args.bc)
+        domains.append(m_domain)
+        services.extend(m_services)
+    if 'pokedex' in args.domains:
+        m_domain, m_services = load_pokedex_domain()
         domains.append(m_domain)
         services.extend(m_services)
     if 'qa' in args.domains:

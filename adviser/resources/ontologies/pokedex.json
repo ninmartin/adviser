@@ -709,5 +709,6 @@
         "abilities",
         "types",
         "weaknesses"
-    ]
+    ],
+    "keyword": "pokedex"
 }
