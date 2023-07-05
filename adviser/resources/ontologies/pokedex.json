@@ -189,8 +189,8 @@
             "Worm"
         ],
         "female": [
-            0,
-            1
+            "false",
+            "true"
         ],
         "height": [
             "0.2",
@@ -373,8 +373,8 @@
             "99"
         ],
         "male": [
-            0,
-            1
+            "false",
+            "true"
         ],
         "name": [
             "Abra",
