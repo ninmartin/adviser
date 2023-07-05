@@ -11,10 +11,10 @@ rule inform(name)
 
 rule inform(height)
     "The pokemon should be {height} tall"
-    "The pokemon should be {height} meter(s) tall"
+    "The pokemon should be {height} meter(s)? tall"
 
 rule inform(weight)
-    "The pokemon should weight {weight} kilogram(s)"
+    "The pokemon should weight {weight} kilogram(s)?"
     "The pokemon should weight {weight}"
 
 
