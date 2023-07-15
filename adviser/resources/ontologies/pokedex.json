@@ -677,7 +677,7 @@
             "95.0"
         ]
     },
-    "key": "id",
+    "key": "name",
     "method": [
         "none",
         "byconstraints",
@@ -699,8 +699,6 @@
         "weaknesses"
     ],
     "system_requestable": [
-        "id",
-        "name",
         "height",
         "weight",
         "male",

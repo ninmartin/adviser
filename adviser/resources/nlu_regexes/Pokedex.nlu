@@ -5,36 +5,45 @@
 rule inform(id)
     "I want {id}"
     "I want the pokemon with number {id}"
+    "The pokemon should have id {id}"
 
 rule inform(name)
     "I want {synonyms("name", name)}"
 
 rule inform(height)
     "The pokemon should be {height} tall"
-    "The pokemon should be {height} meter(s)? tall"
+    "The pokemon should be {height} meter(s|) tall"
+    "I want a pokemon which is {height} meter(s|) tall"
 
 rule inform(weight)
-    "The pokemon should weight {weight} kilogram(s)?"
+    "The pokemon should weight {weight} kilogram(s|)"
     "The pokemon should weight {weight}"
-
+    "I want a pokemon which weights {weight} kilogram(s|)"
 
 rule inform(male)
     "The pokemon should be male"
+    "I want a pokemon which can be male"
 
 rule inform(female)
     "The pokemon should be female"
+    "I want a pokemon which can be female"
 
 rule inform(category)
     "The pokemon should be of category {category}"
+    "I want a pokemon with category {category}"
 
 rule inform(abilities)
     "The pokemon has the ability {abilities}"
+    "I want a pokemon with the abilit(y|ies) {abilities}"
 
 rule inform(types)
-    "The pokemon is of type {types}"
- are
+    "The pokemon is of type {synonyms("types", types)}"
+    "I want a pokemon of type(s|) {synonyms("types", types)}"
+    "I want a pokemon which has type {synonyms("types", types)} and {synonyms("types", types)}"
+
 rule inform(weaknesses)
     "The pokemon has the weakness {weaknesses}"
+    "I want a pokemon with weakness(es|) {weaknesses}"
 
 
 # All slots are requestable
@@ -52,10 +61,10 @@ rule request(weight)
     "What is the weight of the pokemon?"
 
 rule request(male)
-    "Is the pokemon male?"
+    "Can the pokemon be male?"
 
 rule request(female)
-    "Is the pokemon female?"
+    "Can the pokemon be female?"
 
 rule request(category)
     "What is the category of the pokemon?"
@@ -64,10 +73,10 @@ rule request(abilities)
     "What (is|are) the abilit(y|ies) of the pokemon?"
 
 rule request(types)
-    "What (is|are) the type(s) of the pokemon?"
+    "What (is|are) the type(s|) of the pokemon?"
 
 rule request(weaknesses)
-    "What (is|are) the weakness(es) of the pokemon?"
+    "What (is|are) the weakness(es|) of the pokemon?"
 
 
 # synonyms
@@ -80,6 +89,10 @@ function synonyms(slot, value)
             "Nidoran"
         if value = "Nidoran♂"
             "Nidoran"
+    add_if slot = "types"
+        if value = "Ice,Flying"
+            "Ice"
+            "Flying"
 
 function slot_synonyms(slot)
     "{IMPOSSIBLEREGEX()}"

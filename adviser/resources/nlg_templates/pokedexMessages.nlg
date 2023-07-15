@@ -26,12 +26,16 @@ function info(slot, value, name)
 	if slot = "height": "has the height: \"{value}\""
 	if slot = "id": "has id: \"{value}\""
 	if slot = "name": "has name: \"{value}\""
-	if slot = "male": "has gender: \"{value}\""
-	if slot = "female": "has gender: \"{value}\""
+	if slot = "male": "can {either_or(value, "", "not ")}be male"
+	if slot = "female": "can {either_or(value, "", "not ")}be female"
 	if slot = "category": "has category: \"{value}\""
 	if slot = "abilities": "has abilities: \"{value}\""
 	if slot = "types": "has types: \"{value}\""
 	if slot = "weaknesses": "has weaknesses: \"{value}\""
+
+function either_or(boolean, if_true, if_false)
+	if boolean = "True": "{if_true}"
+	if boolean = "False": "{if_false}"
 
 
 # -------------------------Only Name Slot-----------------------------------#

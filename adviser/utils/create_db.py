@@ -4,11 +4,13 @@ from sqlite3 import Error
 
 dicts = []
 
+
 def read_file(file: str):
     with open(file) as f:
         for line in f:
             res = ast.literal_eval(line)
             dicts.append(res)
+
 
 def get_num_abilities():
     m = 0
@@ -20,6 +22,9 @@ def get_num_abilities():
     flat_list = [item for sublist in all_abilities for item in sublist]
     set_abilities = set(flat_list)
     print('Total number of abilities: ', len(set_abilities), '\n')
+    for item in set_abilities:
+        print("\"" + item + "\",")
+
 
 def get_num_types():
     m = 0
@@ -31,6 +36,9 @@ def get_num_types():
     flat_list = [item for sublist in all_types for item in sublist]
     set_types = set(flat_list)
     print('Total number of types: ', len(set_types), '\n')
+    for item in set_types:
+        print("\"" + item + "\",")
+
 
 def get_num_weaknesses():
     m = 0
@@ -42,6 +50,9 @@ def get_num_weaknesses():
     flat_list = [item for sublist in all_weaknesses for item in sublist]
     set_weaknesses = set(flat_list)
     print('Total number of weaknesses: ', len(set_weaknesses), '\n')
+    for item in set_weaknesses:
+        print("\"" + item + "\",")
+
 
 def create_connection(db_file):
     """ create a database connection to a SQLite database """
@@ -53,26 +64,19 @@ def create_connection(db_file):
         print(e)
     return conn
 
+
 def create_table(conn):
     create_table_sql = """ CREATE TABLE IF NOT EXISTS pokedex (
-                                id integer PRIMARY KEY,
-                                name text NOT NULL,
-                                height double NOT NULL,
-                                weight double NOT NULL,
-                                male boolean NOT NULL,
-                                female boolean NOT NULL,
-                                category text NOT NULL,
-                                ability1 text NOT NULL,
-                                ability2 text,
-                                type1 text NOT NULL,
-                                type2 text,
-                                weakness1 text NOT NULL,
-                                weakness2 text,
-                                weakness3 text,
-                                weakness4 text,
-                                weakness5 text,
-                                weakness6 text,
-                                weakness7 text
+                                id TEXT NOT NULL,
+                                name TEXT PRIMARY KEY,
+                                height TEXT NOT NULL,
+                                weight TEXT NOT NULL,
+                                male TEXT NOT NULL,
+                                female TEXT NOT NULL,
+                                category TEXT NOT NULL,
+                                abilities TEXT NOT NULL,
+                                types TEXT NOT NULL,
+                                weaknesses TEXT NOT NULL
                             ); """
 
     try:
@@ -81,33 +85,43 @@ def create_table(conn):
     except Error as e:
         print(e)
 
+
 def fill_table(conn):
-    """ TODO: use empty string to fill non-full ability/type/weakness"""
     for entry in dicts:
         id = entry['Id']
         name = entry['Name']
         height = entry['Height']
         weight = entry['Weight']
-        male = entry['Male']
-        female = entry['Female']
+        if entry['Male']:
+            male = 'True'
+        else:
+            male = 'False'
+        if entry['Female']:
+            female = 'True'
+        else:
+            female = 'False'
         category = entry['Category']
-        abilities = [None, None]
-        types = [None, None]
-        weaknesses = [None, None, None, None, None, None, None]
-        
-        
-        sql = ''' INSERT INTO pokedex(id, name, height, weight, male, female, category, ability1, ability2, type1, type2, weakness1, weakness2, weakness3, weakness4, weakness5, weakness6, weakness7) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'''
-        for i in range(len(entry['Abilities'])):
-            abilities[i] = entry['Abilities'][i]
-        
-        for i in range(len(entry['Type'])):
-            types[i] = entry['Type'][i]
+        abilities = ""
+        types = ""
+        weaknesses = ""
 
+        sql = ''' INSERT INTO pokedex(id, name, height, weight, male, female, category, abilities, types, weaknesses) VALUES(?,?,?,?,?,?,?,?,?,?)'''
+        rval = ""
+        for i in range(len(entry['Abilities'])):
+            rval += entry['Abilities'][i] + ","
+        abilities = rval[:-1]
+        rval = ""
+        for i in range(len(entry['Type'])):
+            rval += entry['Type'][i] + ","
+        types = rval[:-1]
+        rval = ""
         for i in range(len(entry['Weaknesses'])):
-            weaknesses[i] = entry['Weaknesses'][i]
+            rval += entry['Weaknesses'][i] + ","
+        weaknesses = rval[:-1]
 
         cur = conn.cursor()
-        poketuple = (id, name, height, weight, male, female, category, abilities[0], abilities[1], types[0], types[1], weaknesses[0], weaknesses[1], weaknesses[2], weaknesses[3], weaknesses[4], weaknesses[5], weaknesses[6])
+        poketuple = (id, name, height, weight, male, female,
+                     category, abilities, types, weaknesses)
         print(poketuple)
         cur.execute(sql, poketuple)
         conn.commit()
@@ -125,6 +139,7 @@ def main():
     else:
         print("Error! cannot create the database connection.")
     fill_table(conn)
+
 
 if __name__ == "__main__":
     main()
