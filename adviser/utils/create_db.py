@@ -76,7 +76,8 @@ def create_table(conn):
                                 category TEXT NOT NULL,
                                 abilities TEXT NOT NULL,
                                 types TEXT NOT NULL,
-                                weaknesses TEXT NOT NULL
+                                weaknesses TEXT NOT NULL,
+                                caught TEXT NOT NULL
                             ); """
 
     try:
@@ -104,8 +105,9 @@ def fill_table(conn):
         abilities = ""
         types = ""
         weaknesses = ""
+        caught = 'False'
 
-        sql = ''' INSERT INTO pokedex(id, name, height, weight, male, female, category, abilities, types, weaknesses) VALUES(?,?,?,?,?,?,?,?,?,?)'''
+        sql = ''' INSERT INTO pokedex(id, name, height, weight, male, female, category, abilities, types, weaknesses, caught) VALUES(?,?,?,?,?,?,?,?,?,?,?)'''
         rval = ""
         for i in range(len(entry['Abilities'])):
             rval += entry['Abilities'][i] + ","
@@ -121,7 +123,7 @@ def fill_table(conn):
 
         cur = conn.cursor()
         poketuple = (id, name, height, weight, male, female,
-                     category, abilities, types, weaknesses)
+                     category, abilities, types, weaknesses, caught)
         print(poketuple)
         cur.execute(sql, poketuple)
         conn.commit()

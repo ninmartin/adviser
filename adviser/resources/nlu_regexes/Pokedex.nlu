@@ -1,5 +1,7 @@
 # general rules
 
+rule catch() : "I caught this pokemon"
+
 # user informable slots are name, department and position
 
 rule inform(id)
@@ -45,6 +47,14 @@ rule inform(weaknesses)
     "The pokemon has the weakness {weaknesses}"
     "I want a pokemon with weakness(es|) {weaknesses}"
 
+rule inform(caught)
+    "I want a pokemon which I already caught"
+
+# Users can catch a pokemon with the catch rule
+
+rule catch(caught)
+    "I caught this pokemon"
+
 
 # All slots are requestable
 
@@ -77,6 +87,9 @@ rule request(types)
 
 rule request(weaknesses)
     "What (is|are) the weakness(es|) of the pokemon?"
+
+rule request(caught)
+    "Was the pokemon already caught?"
 
 
 # synonyms

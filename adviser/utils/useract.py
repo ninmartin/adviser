@@ -38,6 +38,7 @@ class UserActionType(Enum):
     Bad = 'bad'
     Confirm = 'confirm'
     SelectDomain = 'selectdomain'
+    Catch = 'catch'
 
 
 class UserAct(object):
@@ -57,7 +58,7 @@ class UserAct(object):
                 the information is for the belief state.
 
         """
-        
+
         self.text = text
         self.type = act_type
         self.slot = slot

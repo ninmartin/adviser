@@ -1,7 +1,8 @@
 {
     "binary": [
         "male",
-        "female"
+        "female",
+        "caught"
     ],
     "discourseAct": [
         "ack",
@@ -9,7 +10,8 @@
         "none",
         "silence",
         "thanks",
-        "bad"
+        "bad",
+        "catch"
     ],
     "informable": {
         "abilities": [
@@ -189,6 +191,10 @@
             "Worm"
         ],
         "female": [
+            "false",
+            "true"
+        ],
+        "caught": [
             "false",
             "true"
         ],
@@ -696,7 +702,8 @@
         "category",
         "abilities",
         "types",
-        "weaknesses"
+        "weaknesses",
+        "caught"
     ],
     "system_requestable": [
         "height",

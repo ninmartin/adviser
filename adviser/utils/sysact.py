@@ -36,6 +36,7 @@ class SysActionType(Enum):
     Bad = 'bad'
     Bye = 'closingmsg'
     ConfirmRequest = 'confreq'
+    Catch = 'catch'
 
 
 class SysAct(object):
@@ -61,13 +62,13 @@ class SysAct(object):
     def __str__(self):
         if self.type is not None:
             return self.type.value + \
-                   '(' + \
-                   self._slot_value_dict_to_str(self.slot_values) + \
-                   ')'
+                '(' + \
+                self._slot_value_dict_to_str(self.slot_values) + \
+                ')'
         else:
             return 'SysAct(act_type=' + self.type + ', ' + \
-                    self._slot_value_dict_to_str(self.slot_values) + \
-                    ')'
+                self._slot_value_dict_to_str(self.slot_values) + \
+                ')'
 
     def add_value(self, slot: str, value=None):
         """ Add a value (or just a slot, if value=None) to the system act """
@@ -104,7 +105,8 @@ class SysAct(object):
                             stringrep.append('{}="{}"'.format(slot, value))
                 else:
                     if slot_value_dict[slot] is not None:
-                        stringrep.append('{}="{}"'.format(slot, slot_value_dict[slot]))
+                        stringrep.append('{}="{}"'.format(
+                            slot, slot_value_dict[slot]))
             else:
                 # slot without value
                 stringrep.append(slot)

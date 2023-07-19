@@ -18,6 +18,7 @@ template request(category): "i want "
 template request(abilities): "What are the abilities of the pokemon?"
 template request(types): "What are the types of the pokemon?"
 template request(weaknesses): "What are the weaknesses of the pokemon?"
+template request(caught): "Was the pokemon caught?"
 
 # Rules for System Inform
 
@@ -32,11 +33,20 @@ function info(slot, value, name)
 	if slot = "abilities": "has abilities: \"{value}\""
 	if slot = "types": "has types: \"{value}\""
 	if slot = "weaknesses": "has weaknesses: \"{value}\""
+	if slot = "caught": "was {either_or(value, "", "not ")}caught"
 
 function either_or(boolean, if_true, if_false)
 	if boolean = "True": "{if_true}"
 	if boolean = "False": "{if_false}"
 
+
+# catch stuff
+
+template catch(name)
+	"The Pokemon {name} was caught."
+
+	special_case name = "none"
+		"I’m sorry, I could not find this Pokemon."
 
 # -------------------------Only Name Slot-----------------------------------#
 
