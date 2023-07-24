@@ -318,7 +318,7 @@ class HandcraftedPolicy(Service):
 
         # Otherwise we need to query the db to determine next action
         results = self._query_db(beliefstate)
-        #sys_act = self._raw_action(results, beliefstate)
+        # sys_act = self._raw_action(results, beliefstate)
 
         # gotta catch em all
         if UserActionType.Catch in beliefstate['user_acts']:
@@ -511,9 +511,13 @@ class HandcraftedPolicy(Service):
                 res = result[k] if result[k] else 'not available'
                 if k in ["types", "abilities", "weaknesses"]:
                     splitted = res.split(",")
-                    values = ', '.join(splitted[:-1])
-                    if len(splitted) > 1:
-                        values += " and " + splitted[-1]
+                    if len(splitted) == 1:
+                        values = splitted[0]
+                    else:
+                        values = ', '.join(splitted[:-1])
+                        print(values)
+                        if len(splitted) > 1:
+                            values += " and " + splitted[-1]
                     res = values
                 sys_act.add_value(k, res)
             # Name might not be a constraint in request queries, so add it
