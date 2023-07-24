@@ -125,7 +125,7 @@ class JSONLookupDomain(Domain):
         constraints = {slot: value.replace("'", "''") for slot, value in constraints.items()
                        if value is not None and str(value).lower() != 'dontcare'}
         if constraints:
-            query += ' WHERE ' + ' AND '.join("{} LIKE '%{}%' COLLATE NOCASE".format(key, str(val))
+            query += ' WHERE ' + ' AND '.join("{} LIKE '%{}%' COLLATE NOCASE".format(key, "%".join(str(val).split(",")))
                                               for key, val in constraints.items())
         return self.query_db(query)
 
