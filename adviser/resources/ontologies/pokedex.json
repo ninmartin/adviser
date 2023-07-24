@@ -189,7 +189,8 @@
             "Weed",
             "Wild Bull",
             "Wild Duck",
-            "Worm"
+            "Worm",
+            "New Species"
         ],
         "female": [
             "false",
@@ -465,6 +466,7 @@
             "Marowak",
             "Meowth",
             "Metapod",
+            "Mew",
             "Mewtwo",
             "Moltres",
             "Mr. Mime",
