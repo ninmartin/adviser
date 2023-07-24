@@ -37,6 +37,7 @@ class SysActionType(Enum):
     Bye = 'closingmsg'
     ConfirmRequest = 'confreq'
     Catch = 'catch'
+    Release = 'release'
 
 
 class SysAct(object):

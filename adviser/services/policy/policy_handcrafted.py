@@ -17,6 +17,7 @@
 #
 ###############################################################################
 
+import random
 from collections import defaultdict
 from typing import List, Dict
 
@@ -322,6 +323,9 @@ class HandcraftedPolicy(Service):
         if UserActionType.Catch in beliefstate['user_acts']:
             sys_act = SysAct()
             sys_act.type = SysActionType.Catch
+        elif UserActionType.Release in beliefstate['user_acts']:
+            sys_act = SysAct()
+            sys_act.type = SysActionType.Release
         else:
             sys_act = self._raw_action(results, beliefstate)
 
@@ -343,10 +347,22 @@ class HandcraftedPolicy(Service):
             else:
                 sys_act.add_value(self.domain.get_primary_key(), 'none')
         elif sys_act.type == SysActionType.Catch:
+            if random.random() < 0.5:
+                pokemon_name = self._get_name(beliefstate)
+                table_name = "pokedex"
+                query = f"UPDATE {table_name} \
+                        SET caught='True' \
+                        WHERE name='{pokemon_name}';"
+                self.domain.query_db(query)
+                self.domain.db.commit()
+                sys_act.add_value('caught', 'True')
+            else:
+                sys_act.add_value('caught', 'False')
+        elif sys_act.type == SysActionType.Release:
             pokemon_name = self._get_name(beliefstate)
             table_name = "pokedex"
             query = f"UPDATE {table_name} \
-                    SET caught='True' \
+                    SET caught='False' \
                     WHERE name='{pokemon_name}';"
             self.domain.query_db(query)
             self.domain.db.commit()

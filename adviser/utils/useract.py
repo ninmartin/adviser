@@ -39,6 +39,7 @@ class UserActionType(Enum):
     Confirm = 'confirm'
     SelectDomain = 'selectdomain'
     Catch = 'catch'
+    Release = 'release'
 
 
 class UserAct(object):

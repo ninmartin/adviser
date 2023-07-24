@@ -5,7 +5,8 @@ template welcomemsg(help): "Sorry, I cannot understand you. Please tell me again
 template welcomemsg(more) : "Can I help you with anything else?"
 template bad() : "Sorry I am a bit confused; please tell me again what you are looking for."
 template closingmsg() : "Thank you, goodbye."
-template catch(): "The pokemon is caught."
+template catch(caught): "The pokemon is {either_or(caught, "", "not ")}caught."
+template release(): "The pokemon is released."
 
 # System Requests
 
