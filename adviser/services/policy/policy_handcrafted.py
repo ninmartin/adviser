@@ -145,10 +145,7 @@ class HandcraftedPolicy(Service):
             if UserActionType.SelectDomain in beliefstate["user_acts"]:
                 self.dialog_start()
             self.first_turn = False
-        # gotta catch em all
-        elif UserActionType.Catch in beliefstate['user_acts']:
-            sys_act = SysAct()
-            sys_act.type = SysActionType.Catch
+
         # handle domain specific actions
         else:
             sys_act, sys_state = self._next_action(beliefstate)
@@ -319,7 +316,15 @@ class HandcraftedPolicy(Service):
 
         # Otherwise we need to query the db to determine next action
         results = self._query_db(beliefstate)
-        sys_act = self._raw_action(results, beliefstate)
+        #sys_act = self._raw_action(results, beliefstate)
+
+        # gotta catch em all
+        if UserActionType.Catch in beliefstate['user_acts']:
+            sys_act = SysAct()
+            sys_act.type = SysActionType.Catch
+        else:
+            sys_act = self._raw_action(results, beliefstate)
+
         print(sys_act.type)
         # requests are fairly easy, if it's a request, return it directly
         if sys_act.type == SysActionType.Request:
@@ -344,6 +349,7 @@ class HandcraftedPolicy(Service):
                     SET caught='True' \
                     WHERE name='{pokemon_name}';"
             self.domain.query_db(query)
+            self.domain.db.commit()
 
         sys_state['last_act'] = sys_act
         return (sys_act, sys_state)

@@ -1,7 +1,5 @@
 # general rules
 
-rule catch() : "I caught this pokemon"
-
 # user informable slots are name, department and position
 
 rule inform(id)

@@ -97,16 +97,9 @@ class JSONLookupDomain(Domain):
         """
 
         # open and read db file to temporary file
-        file_db = sqlite3.connect(db_file_path, check_same_thread=False)
-        tempfile = StringIO()
-        for line in file_db.iterdump():
-            tempfile.write('%s\n' % line)
-        file_db.close()
-        tempfile.seek(0)
-        # Create a database in memory and import from temporary file
-        db = sqlite3.connect(':memory:', check_same_thread=False)
+        db = sqlite3.connect(db_file_path, check_same_thread=False)
         db.row_factory = self._sqllite_dict_factory
-        db.cursor().executescript(tempfile.read())
+        #db.cursor().executescript(tempfile.read())
         db.commit()
         # file_db.backup(databases[domain]) # works only in python >= 3.7
 
