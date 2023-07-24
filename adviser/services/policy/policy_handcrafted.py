@@ -95,6 +95,7 @@ class HandcraftedPolicy(Service):
         """
         self.turns += 1
         # do nothing on the first turn --LV
+        print(beliefstate)
         sys_state = {}
         if self.first_turn and not beliefstate['user_acts']:
             self.first_turn = False
@@ -255,8 +256,8 @@ class HandcraftedPolicy(Service):
         # TODO: consider threshold of belief for adding a value? --LV
         for slot in informs:
             if slot not in dontcare:
-                for value in informs[slot]:
-                    slots[slot] = value
+                #slots[slot] = list(informs[slot])
+                slots[slot] = ",".join(informs[slot])
         return slots, dontcare
 
     def _get_open_slot(self, beliefstate: BeliefState):
@@ -329,7 +330,6 @@ class HandcraftedPolicy(Service):
         else:
             sys_act = self._raw_action(results, beliefstate)
 
-        print(sys_act.type)
         # requests are fairly easy, if it's a request, return it directly
         if sys_act.type == SysActionType.Request:
             if len(list(sys_act.slot_values.keys())) > 0:
@@ -346,10 +346,11 @@ class HandcraftedPolicy(Service):
                 sys_state['lastInformedPrimKeyVal'] = values[0]
             else:
                 sys_act.add_value(self.domain.get_primary_key(), 'none')
+            print(sys_act.slot_values)
         elif sys_act.type == SysActionType.Catch:
             if random.random() < 0.5:
                 pokemon_name = self._get_name(beliefstate)
-                table_name = "pokedex"
+                table_name = self.get_domain_name()
                 query = f"UPDATE {table_name} \
                         SET caught='True' \
                         WHERE name='{pokemon_name}';"
@@ -360,7 +361,7 @@ class HandcraftedPolicy(Service):
                 sys_act.add_value('caught', 'False')
         elif sys_act.type == SysActionType.Release:
             pokemon_name = self._get_name(beliefstate)
-            table_name = "pokedex"
+            table_name = self.get_domain_name()
             query = f"UPDATE {table_name} \
                     SET caught='False' \
                     WHERE name='{pokemon_name}';"
