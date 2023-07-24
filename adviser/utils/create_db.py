@@ -108,19 +108,15 @@ def fill_table(conn):
         caught = 'False'
 
         sql = ''' INSERT INTO pokedex(id, name, height, weight, male, female, category, abilities, types, weaknesses, caught) VALUES(?,?,?,?,?,?,?,?,?,?,?)'''
-        rval = ""
-        for i in range(len(entry['Abilities'])):
-            rval += entry['Abilities'][i] + ","
-        abilities = rval[:-1]
-        rval = ""
-        for i in range(len(entry['Type'])):
-            rval += entry['Type'][i] + ","
-        types = rval[:-1]
-        rval = ""
-        for i in range(len(entry['Weaknesses'])):
-            rval += entry['Weaknesses'][i] + ","
-        weaknesses = rval[:-1]
 
+        a_list = sorted(entry['Abilities'])
+        abilities = ','.join(a_list)
+
+        t_list = sorted(entry['Type'])
+        types = ','.join(t_list)
+
+        w_list = sorted(entry['Weaknesses'])
+        weaknesses = ','.join(w_list)
         cur = conn.cursor()
         poketuple = (id, name, height, weight, male, female,
                      category, abilities, types, weaknesses, caught)

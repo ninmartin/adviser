@@ -148,3 +148,4 @@
 {'Id': 148, 'Name': 'Dragonair', 'Height': 4.0, 'Weight': 16.5, 'Male': True, 'Female': True, 'Category': 'Dragon', 'Abilities': ['Shed Skin'], 'Type': ['Dragon'], 'Weaknesses': ['Fairy', 'Ice', 'Dragon']}
 {'Id': 149, 'Name': 'Dragonite', 'Height': 2.2, 'Weight': 210.0, 'Male': True, 'Female': True, 'Category': 'Dragon', 'Abilities': ['Inner Focus'], 'Type': ['Dragon', 'Flying'], 'Weaknesses': ['Fairy', 'Dragon', 'Ice', 'Rock']}
 {'Id': 150, 'Name': 'Mewtwo', 'Height': 2.0, 'Weight': 122.0, 'Male': False, 'Female': False, 'Category': 'Genetic', 'Abilities': ['Pressure'], 'Type': ['Psychic'], 'Weaknesses': ['Ghost', 'Dark', 'Bug']}
+{'Id': 151, 'Name': 'Mew', 'Height': 0.4, 'Weight': 4.0, 'Male': False, 'Female': False, 'Category': 'New Species', 'Abilities': ['Synchronize'], 'Type': ['Psychic'], 'Weaknesses': ['Ghost', 'Dark', 'Bug']}
