@@ -38,8 +38,8 @@ function info(slot, value, name)
 	if slot = "caught": "was {either_or(value, "", "not ")}caught"
 
 function either_or(boolean, if_true, if_false)
-	if boolean = "True": "{if_true}"
-	if boolean = "False": "{if_false}"
+	if boolean = "true": "{if_true}"
+	if boolean = "false": "{if_false}"
 
 
 # catch stuff

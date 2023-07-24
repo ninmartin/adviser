@@ -21,12 +21,20 @@ rule inform(weight)
     "I want a pokemon which weights {weight} kilogram(s|)"
 
 rule inform(male)
-    "The pokemon should be male"
-    "I want a pokemon which can be male"
+    if male = "true":
+        "The pokemon should be male"
+        "I want a pokemon which can be male"
+    if male = "false":
+        "The pokemon should not be male"
+        "I want a pokemon which can not be male"
 
 rule inform(female)
-    "The pokemon should be female"
-    "I want a pokemon which can be female"
+    if female = "true":
+        "The pokemon should be female"
+        "I want a pokemon which can be female"
+    if female = "false":
+        "The pokemon should not be female"
+        "I want a pokemon which can not be female"
 
 rule inform(category)
     "The pokemon should be of category {category}"
