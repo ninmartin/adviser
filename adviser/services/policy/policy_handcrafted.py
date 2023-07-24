@@ -508,6 +508,12 @@ class HandcraftedPolicy(Service):
             # add slots + values (where available) to the sys_act
             for k in keys:
                 res = result[k] if result[k] else 'not available'
+                if k in ["types", "abilities", "weaknesses"]:
+                    splitted = res.split(",")
+                    values = ', '.join(splitted[:-1])
+                    if len(splitted) > 1:
+                        values += " and " + splitted[-1]
+                    res = values
                 sys_act.add_value(k, res)
             # Name might not be a constraint in request queries, so add it
             if self.domain_key not in keys:
