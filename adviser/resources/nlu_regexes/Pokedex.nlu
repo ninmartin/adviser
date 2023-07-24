@@ -41,15 +41,18 @@ rule inform(category)
     "I want a pokemon with category {category}"
 
 rule inform(abilities)
+    "{synonyms("abilities", abilities)}"
     "The pokemon has the ability {abilities}"
     "I want a pokemon with the abilit(y|ies) {abilities}"
 
 rule inform(types)
+    "{synonyms("types", types)}"
     "The pokemon is of type {synonyms("types", types)}"
     "I want a pokemon of type(s|) {synonyms("types", types)}"
     "I want a pokemon which has type {synonyms("types", types)} and {synonyms("types", types)}"
 
 rule inform(weaknesses)
+    "{synonyms("weaknesses", weaknesses)}"
     "The pokemon has the weakness {weaknesses}"
     "I want a pokemon with weakness(es|) {weaknesses}"
 
@@ -108,6 +111,9 @@ function synonyms(slot, value)
             "Nidoran"
         if value = "Nidoran♂"
             "Nidoran"
+        if value = "Farfetch’d"
+            "Farfetch"
+            "Farfetchd"
     add_if slot = "types"
         if value = "Ice,Flying"
             "Ice"
