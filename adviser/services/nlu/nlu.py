@@ -94,7 +94,8 @@ class HandcraftedNLU(Service):
         self.USER_REQUESTABLE = domain.get_requestable_slots()
 
         # Getting the relative path where regexes are stored
-        self.base_folder = os.path.join(get_root_dir(), 'resources', 'nlu_regexes')
+        self.base_folder = os.path.join(
+            get_root_dir(), 'resources', 'nlu_regexes')
 
         # Setting previous system act to None to signal the first turn
         # self.prev_sys_act = None
@@ -122,7 +123,6 @@ class HandcraftedNLU(Service):
 
     @PublishSubscribe(sub_topics=["user_utterance"], pub_topics=["user_acts"])
     def extract_user_acts(self, user_utterance: str = None) -> dict(user_acts=List[UserAct]):
-
         """
         Responsible for detecting user acts with their respective slot-values from the user
         utterance through regular expressions.
@@ -151,7 +151,6 @@ class HandcraftedNLU(Service):
             self._match_domain_specific_act(user_utterance)
 
         self._solve_informable_values()
-
 
         # If nothing else has been matched, see if the user chose a domain; otherwise if it's
         # not the first turn, it's a bad act
@@ -232,7 +231,8 @@ class HandcraftedNLU(Service):
                     # Check if Deny happens after System Request more, then trigger bye
                     elif self.sys_act_info['last_act'].type == SysActionType.RequestMore \
                             and user_act_type == UserActionType.Deny:
-                        user_act = UserAct(text=user_utterance, act_type=UserActionType.Bye)
+                        user_act = UserAct(
+                            text=user_utterance, act_type=UserActionType.Bye)
                         self.user_acts.append(user_act)
 
                 # Check if Request or Select is the previous system act
@@ -242,7 +242,8 @@ class HandcraftedNLU(Service):
                         # Iteration over all slots mentioned in the last system act
                         for slot in self.sys_act_info['last_act'].slot_values:
                             # Adding user inform act
-                            self._add_inform(user_utterance, slot, value=user_act_type)
+                            self._add_inform(
+                                user_utterance, slot, value=user_act_type)
 
                 # Check if the user wants to get all information about a particular entity
                 elif user_act_type == 'req_everything':
@@ -252,7 +253,8 @@ class HandcraftedNLU(Service):
                     # This section covers all general user acts that do not depend on
                     # the dialog history
                     # New user act -- UserAct()
-                    user_act = UserAct(act_type=user_act_type, text=user_utterance)
+                    user_act = UserAct(
+                        act_type=user_act_type, text=user_utterance)
                     self.user_acts.append(user_act)
 
     def _match_domain_specific_act(self, user_utterance: str):
@@ -297,7 +299,8 @@ class HandcraftedNLU(Service):
 
         """
         # New user act -- Request(slot)
-        user_act = UserAct(text=user_utterance, act_type=UserActionType.Request, slot=slot)
+        user_act = UserAct(text=user_utterance,
+                           act_type=UserActionType.Request, slot=slot)
         self.user_acts.append(user_act)
         # Storing user requested slots during the whole dialog
         self.slots_requested.add(slot)
@@ -325,8 +328,14 @@ class HandcraftedNLU(Service):
                                 # Adding user request act
                                 self._add_request(user_utterance, req_slot)
                     # Adding user inform act
+                    if slot == 'weaknesses' and 'weakness' not in user_utterance.lower():
+                        continue
+                    elif slot == 'types' and 'type' not in user_utterance.lower():
+                        continue
+                    elif slot == 'category' and 'category' not in user_utterance.lower():
+                        continue
                     self._add_inform(user_utterance, slot, value)
-        
+
     def _add_inform(self, user_utterance: str, slot: str, value: str):
         """
         Creates the user request act and adds it to the user act list
@@ -404,7 +413,6 @@ class HandcraftedNLU(Service):
             # Since the user acts are matched, they get 1.0 as score
             self.user_acts[i].score = 1.0
 
-
     def _disambiguate_co_occurrence(self, beliefstate: BeliefState):
         # Check if there is user inform and request occur simultaneously for a binary slot
         # E.g. request(applied_nlp) & inform(applied_nlp=true)
@@ -438,7 +446,8 @@ class HandcraftedNLU(Service):
                     if user_act.value not in informed_values:
                         informed_values[user_act.value] = [(i, user_act.slot)]
                     else:
-                        informed_values[user_act.value].append((i, user_act.slot))
+                        informed_values[user_act.value].append(
+                            (i, user_act.slot))
 
         informed_values = {value: informed_values[value] for value in informed_values if
                            len(informed_values[value]) > 1}
@@ -456,7 +465,8 @@ class HandcraftedNLU(Service):
         if self.language == Language.ENGLISH:
             # Loading regular expression from JSON files
             # as dictionaries {act:regex, ...} or {slot:{value:regex, ...}, ...}
-            self.general_regex = json.load(open(self.base_folder + '/GeneralRules.json'))
+            self.general_regex = json.load(
+                open(self.base_folder + '/GeneralRules.json'))
             self.request_regex = json.load(open(self.base_folder + '/' + self.domain_name
                                                 + 'RequestRules.json'))
             self.inform_regex = json.load(open(self.base_folder + '/' + self.domain_name
@@ -465,7 +475,8 @@ class HandcraftedNLU(Service):
             # TODO: Change this once
             # Loading regular expression from JSON files
             # as dictionaries {act:regex, ...} or {slot:{value:regex, ...}, ...}
-            self.general_regex = json.load(open(self.base_folder + '/GeneralRulesGerman.json'))
+            self.general_regex = json.load(
+                open(self.base_folder + '/GeneralRulesGerman.json'))
             self.request_regex = json.load(open(self.base_folder + '/' + self.domain_name
                                                 + 'GermanRequestRules.json'))
             self.inform_regex = json.load(open(self.base_folder + '/' + self.domain_name

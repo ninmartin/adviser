@@ -38,6 +38,7 @@ class SysActionType(Enum):
     ConfirmRequest = 'confreq'
     Catch = 'catch'
     Release = 'release'
+    InformNumber = 'inform_number'
 
 
 class SysAct(object):

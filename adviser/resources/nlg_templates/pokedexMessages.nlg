@@ -7,6 +7,7 @@ template bad() : "Sorry I am a bit confused; please tell me again what you are l
 template closingmsg() : "Thank you, goodbye."
 template catch(caught): "The pokemon is {either_or(caught, "", "not ")}caught."
 template release(): "The pokemon is released."
+template inform_number(num_caught): "There were {num_caught} Pokemon caught!" 
 
 # System Requests
 

@@ -12,7 +12,8 @@
         "thanks",
         "bad",
         "catch",
-        "release"
+        "release",
+        "inform_number"
     ],
     "informable": {
         "abilities": [

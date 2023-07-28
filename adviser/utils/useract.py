@@ -40,6 +40,7 @@ class UserActionType(Enum):
     SelectDomain = 'selectdomain'
     Catch = 'catch'
     Release = 'release'
+    InformNumber = "inform_number"
 
 
 class UserAct(object):

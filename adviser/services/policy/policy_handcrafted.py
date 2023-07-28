@@ -256,7 +256,7 @@ class HandcraftedPolicy(Service):
         # TODO: consider threshold of belief for adding a value? --LV
         for slot in informs:
             if slot not in dontcare:
-                #slots[slot] = list(informs[slot])
+                # slots[slot] = list(informs[slot])
                 slots[slot] = ",".join(informs[slot])
         return slots, dontcare
 
@@ -309,7 +309,9 @@ class HandcraftedPolicy(Service):
             return sys_act, {'last_act': sys_act}
 
         elif self.domain.get_primary_key() in beliefstate['informs'] \
-                and not beliefstate['requests']:
+                and not beliefstate['requests'] \
+                and (UserActionType.Inform in beliefstate['user_acts']
+                     or UserActionType.Request in beliefstate['user_acts']):
             sys_act = SysAct()
             sys_act.type = SysActionType.InformByName
             sys_act.add_value(self.domain.get_primary_key(),
@@ -327,6 +329,9 @@ class HandcraftedPolicy(Service):
         elif UserActionType.Release in beliefstate['user_acts']:
             sys_act = SysAct()
             sys_act.type = SysActionType.Release
+        elif UserActionType.InformNumber in beliefstate['user_acts']:
+            sys_act = SysAct()
+            sys_act.type = SysActionType.InformNumber
         else:
             sys_act = self._raw_action(results, beliefstate)
 
@@ -350,23 +355,28 @@ class HandcraftedPolicy(Service):
         elif sys_act.type == SysActionType.Catch:
             if random.random() < 0.5:
                 pokemon_name = self._get_name(beliefstate)
-                table_name = self.get_domain_name()
+                table_name = self.domain.get_domain_name()
                 query = f"UPDATE {table_name} \
                         SET caught='True' \
                         WHERE name='{pokemon_name}';"
                 self.domain.query_db(query)
                 self.domain.db.commit()
-                sys_act.add_value('caught', 'True')
+                sys_act.add_value('caught', 'true')
             else:
-                sys_act.add_value('caught', 'False')
+                sys_act.add_value('caught', 'false')
         elif sys_act.type == SysActionType.Release:
             pokemon_name = self._get_name(beliefstate)
-            table_name = self.get_domain_name()
+            table_name = self.domain.get_domain_name()
             query = f"UPDATE {table_name} \
                     SET caught='False' \
                     WHERE name='{pokemon_name}';"
             self.domain.query_db(query)
             self.domain.db.commit()
+        elif sys_act.type == SysActionType.InformNumber:
+            table_name = self.domain.get_domain_name()
+            query = f"SELECT COUNT(*) FROM {table_name} WHERE caught='True';"
+            rval = self.domain.query_db(query)[0]['COUNT(*)']
+            sys_act.add_value('num_caught', str(rval))
 
         sys_state['last_act'] = sys_act
         return (sys_act, sys_state)

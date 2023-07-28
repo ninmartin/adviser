@@ -47,6 +47,7 @@ rule inform(abilities)
     "I want a pokemon with the abilit(y|ies) {synonyms("abilities", abilities)}"
 
 rule inform(types)
+    "{synonyms("types", types)}"
     "The pokemon is of type {synonyms("types", types)}"
     "I want a pokemon of type(s|) {synonyms("types", types)}"
     "I want a pokemon which has type {synonyms("types", types)} and {synonyms("types", types)}"
@@ -57,13 +58,10 @@ rule inform(weaknesses)
     "I want a pokemon with weakness(es|) {synonyms("weaknesses", weaknesses)}"
 
 rule inform(caught)
-    "I want a pokemon which I already caught"
-
-# Users can catch a pokemon with the catch rule
-
-rule catch(caught)
-    "I caught this pokemon"
-
+    if caught = "true"
+        "I want a pokemon which I already caught"
+    if caught = "false"
+        "I want a pokemon which I did not catch"
 
 # All slots are requestable
 
@@ -114,10 +112,6 @@ function synonyms(slot, value)
         if value = "Farfetch’d"
             "Farfetch"
             "Farfetchd"
-    add_if slot = "types"
-        if value = "Ice,Flying"
-            "Ice"
-            "Flying"
 
 function slot_synonyms(slot)
     "{IMPOSSIBLEREGEX()}"
