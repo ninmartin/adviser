@@ -32,7 +32,7 @@ class JSONLookupDomain(Domain):
        access method (sqllite).
     """
 
-    def __init__(self, name: str, json_ontology_file: str = None, sqllite_db_file: str = None, \
+    def __init__(self, name: str, json_ontology_file: str = None, sqllite_db_file: str = None,
                  display_name: str = None):
         """ Loads the ontology from a json file and the data from a sqllite
             database.
@@ -60,7 +60,8 @@ class JSONLookupDomain(Domain):
         sqllite_db_file = sqllite_db_file or os.path.join('resources', 'databases',
                                                           name + '.db')
 
-        self.ontology_json = json.load(open(root_dir + '/' + json_ontology_file))
+        self.ontology_json = json.load(
+            open(root_dir + '/' + json_ontology_file))
         # load database
         self.db = self._load_db_to_memory(root_dir + '/' + sqllite_db_file)
 
@@ -85,7 +86,7 @@ class JSONLookupDomain(Domain):
             row_dict[col[0]] = row[col_idx]
         return row_dict
 
-    def _load_db_to_memory(self, db_file_path : str):
+    def _load_db_to_memory(self, db_file_path: str):
         """ Loads a sqllite3 database from file to memory in order to save
             I/O operations
 
@@ -99,7 +100,7 @@ class JSONLookupDomain(Domain):
         # open and read db file to temporary file
         db = sqlite3.connect(db_file_path, check_same_thread=False)
         db.row_factory = self._sqllite_dict_factory
-        #db.cursor().executescript(tempfile.read())
+        # db.cursor().executescript(tempfile.read())
         db.commit()
         # file_db.backup(databases[domain]) # works only in python >= 3.7
 
@@ -121,7 +122,8 @@ class JSONLookupDomain(Domain):
         select_clause = ", ".join(set([self.get_primary_key()]) |
                                   set(self.get_system_requestable_slots()) |
                                   set(requested_slots))
-        query = "SELECT {} FROM {}".format(select_clause, self.get_domain_name())
+        query = "SELECT {} FROM {}".format(
+            select_clause, self.get_domain_name())
         constraints = {slot: value.replace("'", "''") for slot, value in constraints.items()
                        if value is not None and str(value).lower() != 'dontcare'}
         if constraints:
@@ -131,9 +133,11 @@ class JSONLookupDomain(Domain):
                 if not first:
                     query += " AND "
                 if key in ["types", "abilities", "weaknesses"]:
-                    query += "{} LIKE '%{}%' COLLATE NOCASE".format(key, "%".join(str(val).split(",")))
+                    query += "{} LIKE '%{}%' COLLATE NOCASE".format(
+                        key, "%".join(str(val).split(",")))
                 else:
                     query += "{}='{}' COLLATE NOCASE".format(key, str(val))
+                first = False
         return self.query_db(query)
 
     def find_info_about_entity(self, entity_id, requested_slots: Iterable):

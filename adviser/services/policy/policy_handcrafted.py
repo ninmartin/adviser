@@ -95,7 +95,6 @@ class HandcraftedPolicy(Service):
         """
         self.turns += 1
         # do nothing on the first turn --LV
-        print(beliefstate)
         sys_state = {}
         if self.first_turn and not beliefstate['user_acts']:
             self.first_turn = False
@@ -256,8 +255,12 @@ class HandcraftedPolicy(Service):
         # TODO: consider threshold of belief for adding a value? --LV
         for slot in informs:
             if slot not in dontcare:
-                # slots[slot] = list(informs[slot])
-                slots[slot] = ",".join(informs[slot])
+                if slot in ['category', 'weaknesses', 'types']:
+                    # slots[slot] = list(informs[slot])
+                    slots[slot] = ",".join(informs[slot])
+                else:
+                    for value in informs[slot]:
+                        slots[slot] = value
         return slots, dontcare
 
     def _get_open_slot(self, beliefstate: BeliefState):
@@ -351,10 +354,9 @@ class HandcraftedPolicy(Service):
                 sys_state['lastInformedPrimKeyVal'] = values[0]
             else:
                 sys_act.add_value(self.domain.get_primary_key(), 'none')
-            print(sys_act.slot_values)
         elif sys_act.type == SysActionType.Catch:
+            pokemon_name = self._get_name(beliefstate)
             if random.random() < 0.5:
-                pokemon_name = self._get_name(beliefstate)
                 table_name = self.domain.get_domain_name()
                 query = f"UPDATE {table_name} \
                         SET caught='True' \
@@ -364,6 +366,7 @@ class HandcraftedPolicy(Service):
                 sys_act.add_value('caught', 'true')
             else:
                 sys_act.add_value('caught', 'false')
+            sys_act.add_value('name', pokemon_name)
         elif sys_act.type == SysActionType.Release:
             pokemon_name = self._get_name(beliefstate)
             table_name = self.domain.get_domain_name()
@@ -525,7 +528,6 @@ class HandcraftedPolicy(Service):
                         values = splitted[0]
                     else:
                         values = ', '.join(splitted[:-1])
-                        print(values)
                         if len(splitted) > 1:
                             values += " and " + splitted[-1]
                     res = values
@@ -581,7 +583,14 @@ class HandcraftedPolicy(Service):
         # offer is relevant to them
         constraints, dontcare = self._get_constraints(beliefstate)
         for c in constraints:
-            sys_act.add_value(c, constraints[c])
+            splitted = constraints[c].split(",")
+            if len(splitted) == 1:
+                values = splitted[0]
+            else:
+                values = ', '.join(splitted[:-1])
+                if len(splitted) > 1:
+                    values += " and " + splitted[-1]
+            sys_act.add_value(c, values)
 
     def _convert_inform_by_constraints(self, q_results: iter,
                                        sys_act: SysAct, beliefstate: BeliefState):
@@ -610,6 +619,13 @@ class HandcraftedPolicy(Service):
         sys_act.type = SysActionType.InformByName
         constraints, dontcare = self._get_constraints(beliefstate)
         for c in constraints:
+            splitted = constraints[c].split(",")
+            if len(splitted) == 1:
+                values = splitted[0]
+            else:
+                values = ', '.join(splitted[:-1])
+                if len(splitted) > 1:
+                    values += " and " + splitted[-1]
             # Using constraints here rather than results to deal with empty
             # results sets (eg. user requests something impossible) --LV
-            sys_act.add_value(c, constraints[c])
+            sys_act.add_value(c, values)

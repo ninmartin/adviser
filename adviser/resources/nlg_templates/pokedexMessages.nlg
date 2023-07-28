@@ -1,52 +1,51 @@
 # ---------------NEW RULES - POKEDEX MESSAGES-------------------------
 
-template welcomemsg(): "Welcome to the Pokedex chat bot. How may I help you?"
+template welcomemsg(): "Welcome to the Pokedex chat bot. Which Pokemon do you want to learn about?"
 template welcomemsg(help): "Sorry, I cannot understand you. Please tell me again what you are looking for."
 template welcomemsg(more) : "Can I help you with anything else?"
 template bad() : "Sorry I am a bit confused; please tell me again what you are looking for."
 template closingmsg() : "Thank you, goodbye."
-template catch(caught): "The pokemon is {either_or(caught, "", "not ")}caught."
-template release(): "The pokemon is released."
+template catch(caught, name): "{either_or(caught, "Gotcha! ", "")}{name} {either_or(caught, "was caught!", "got away!")}"
+template release(): "The pokemon was released."
 template inform_number(num_caught): "There were {num_caught} Pokemon caught!" 
 
 # System Requests
 
-template request(id): "What should be the id of the Pokemon?"
-template request(name): "What is the name of the Pokemon?"
-template request(height): "What should be the height of the Pokemon?"
-template request(weight): "What should be the weight of the Pokemon?"
-template request(male): "Is the Pokemon a male?"
-template request(female): "Is the Pokemon a female?"
+template request(male): "Can the Pokemon be male?"
+template request(female): "Can the Pokemon be female?"
 template request(category): "Which category should the pokemon have?"
 template request(abilities): "What are the abilities of the pokemon?"
 template request(types): "What are the types of the pokemon?"
 template request(weaknesses): "What are the weaknesses of the pokemon?"
-template request(caught): "Was the pokemon caught?"
 
 # Rules for System Inform
 
 function info(slot, value, name)
-	if slot = "weight": "has the weight: \"{value}\""
-	if slot = "height": "has the height: \"{value}\""
-	if slot = "id": "has id: \"{value}\""
-	if slot = "name": "has name: \"{value}\""
+	if slot = "weight": "weighs {value} kilograms"
+	if slot = "height": "is {value} meters tall"
+	if slot = "id": "has the id {value}"
+	if slot = "name": "is called {value}"
 	if slot = "male": "can {either_or(value, "", "not ")}be male"
 	if slot = "female": "can {either_or(value, "", "not ")}be female"
-	if slot = "category": "has category: \"{value}\""
-	if slot = "abilities": "has abilities: \"{value}\""
-	if slot = "types": "has types: \"{value}\""
-	if slot = "weaknesses": "has weaknesses: \"{value}\""
+	if slot = "category": "has the category {value}"
+	if slot = "abilities": "has the ability {value}"
+	if slot = "types": "has the type {value}"
+	if slot = "weaknesses": "has the weaknesses {value}"
 	if slot = "caught": "was {either_or(value, "", "not ")}caught"
 
 function either_or(boolean, if_true, if_false)
 	if boolean = "true": "{if_true}"
 	if boolean = "false": "{if_false}"
 
+function catching(boolean, if_true, if_false)
+	if boolean = "true": "Gotcha! {if_false} was caught!"
+	if boolean = "false": "{if_false} got away!"
+
 
 # catch stuff
 
 template catch(name)
-	"The Pokemon {name} was caught."
+	"Gotcha! {name} was caught!"
 
 	special_case name = "none"
 		"I’m sorry, I could not find this Pokemon."
@@ -70,13 +69,13 @@ template inform_alternatives(name)
 #------------------------ Name Slot + Slots----------------------------------#
 
 template inform_byname(name, *slots)
-	"The Pokemon called {name} {for_entry(slots, "info", ", they ", " and they ", name)}."
+	"The Pokemon called {name} {for_entry(slots, "info", ", it ", " and it ", name)}."
 	
 	special_case name = "none"
 		"There is no such Pokemon that {for_entry(slots, "info", ", ", " and ", name)}."
 
 template inform_alternatives(name, *slots)
-	"The Pokemon {name} also {for_entry(slots, "info", ", they ", " and they ", name)}."
+	"The Pokemon {name} also {for_entry(slots, "info", ", it ", " and it ", name)}."
 	
 	special_case name = "none"
 		"There is no other Pokemon which also {for_entry(slots, "info", ", ", " and ", name)}."
