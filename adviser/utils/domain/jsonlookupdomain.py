@@ -125,8 +125,15 @@ class JSONLookupDomain(Domain):
         constraints = {slot: value.replace("'", "''") for slot, value in constraints.items()
                        if value is not None and str(value).lower() != 'dontcare'}
         if constraints:
-            query += ' WHERE ' + ' AND '.join("{} LIKE '%{}%' COLLATE NOCASE".format(key, "%".join(str(val).split(",")))
-                                              for key, val in constraints.items())
+            query += ' WHERE '
+            first = True
+            for key, val in constraints.items():
+                if not first:
+                    query += " AND "
+                if key in ["types", "abilities", "weaknesses"]:
+                    query += "{} LIKE '%{}%' COLLATE NOCASE".format(key, "%".join(str(val).split(",")))
+                else:
+                    query += "{}='{}' COLLATE NOCASE".format(key, str(val))
         return self.query_db(query)
 
     def find_info_about_entity(self, entity_id, requested_slots: Iterable):
