@@ -327,7 +327,8 @@ class HandcraftedNLU(Service):
                             if req_slot != self.domain_key:
                                 # Adding user request act
                                 self._add_request(user_utterance, req_slot)
-                    # Adding user inform act
+                    # requires keywords in user_utterance to provide slot matching
+                    # because of overlapping nlu patterns
                     if slot == 'weaknesses' and 'weakness' not in user_utterance.lower():
                         continue
                     elif slot == 'types' and 'type' not in user_utterance.lower():

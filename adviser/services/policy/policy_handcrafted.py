@@ -253,10 +253,10 @@ class HandcraftedPolicy(Service):
         informs = beliefstate["informs"]
         slots = {}
         # TODO: consider threshold of belief for adding a value? --LV
+        # prepare value for special cases in belief state
         for slot in informs:
             if slot not in dontcare:
                 if slot in ['category', 'weaknesses', 'types']:
-                    # slots[slot] = list(informs[slot])
                     slots[slot] = ",".join(informs[slot])
                 else:
                     for value in informs[slot]:
@@ -313,7 +313,7 @@ class HandcraftedPolicy(Service):
 
         elif self.domain.get_primary_key() in beliefstate['informs'] \
                 and not beliefstate['requests'] \
-                and (UserActionType.Inform in beliefstate['user_acts']
+                and (UserActionType.Inform in beliefstate['user_acts'] # inform only if UserActionType is Inform or Request
                      or UserActionType.Request in beliefstate['user_acts']):
             sys_act = SysAct()
             sys_act.type = SysActionType.InformByName
@@ -325,7 +325,7 @@ class HandcraftedPolicy(Service):
         results = self._query_db(beliefstate)
         # sys_act = self._raw_action(results, beliefstate)
 
-        # gotta catch em all
+        # check for the new UserActionTypes
         if UserActionType.Catch in beliefstate['user_acts']:
             sys_act = SysAct()
             sys_act.type = SysActionType.Catch
@@ -354,8 +354,11 @@ class HandcraftedPolicy(Service):
                 sys_state['lastInformedPrimKeyVal'] = values[0]
             else:
                 sys_act.add_value(self.domain.get_primary_key(), 'none')
+        # gotta catch em all
+        # implement catch functionality and database update
         elif sys_act.type == SysActionType.Catch:
             pokemon_name = self._get_name(beliefstate)
+            # 50% success chance in catching a pokemon
             if random.random() < 0.5:
                 table_name = self.domain.get_domain_name()
                 query = f"UPDATE {table_name} \
@@ -367,6 +370,7 @@ class HandcraftedPolicy(Service):
             else:
                 sys_act.add_value('caught', 'false')
             sys_act.add_value('name', pokemon_name)
+        # implement release functionality and database update
         elif sys_act.type == SysActionType.Release:
             pokemon_name = self._get_name(beliefstate)
             table_name = self.domain.get_domain_name()
@@ -375,6 +379,7 @@ class HandcraftedPolicy(Service):
                     WHERE name='{pokemon_name}';"
             self.domain.query_db(query)
             self.domain.db.commit()
+        # counting all entries where caught='True'
         elif sys_act.type == SysActionType.InformNumber:
             table_name = self.domain.get_domain_name()
             query = f"SELECT COUNT(*) FROM {table_name} WHERE caught='True';"
@@ -618,6 +623,7 @@ class HandcraftedPolicy(Service):
 
         sys_act.type = SysActionType.InformByName
         constraints, dontcare = self._get_constraints(beliefstate)
+        # adjusting the value for multiple values which is given to the NLG
         for c in constraints:
             splitted = constraints[c].split(",")
             if len(splitted) == 1:

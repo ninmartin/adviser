@@ -1,6 +1,6 @@
 # general rules
 
-# user informable slots are name, department and position
+# All slots are informalble
 
 rule inform(id)
     "I want {id}"
@@ -104,7 +104,6 @@ rule request(types)
 
 rule request(weaknesses)
     "What (is|are) the weakness(es|) of the pokemon?"
-
 rule request(caught)
     "Was (the pokemon|it) (already|) caught?"
 
@@ -156,6 +155,3 @@ function slot_synonyms(slot)
     if slot = "weaknesses"
         "weakness"
         "weaknesses"
-
-
-# constants

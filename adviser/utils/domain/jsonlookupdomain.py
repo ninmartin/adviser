@@ -98,6 +98,8 @@ class JSONLookupDomain(Domain):
         """
 
         # open and read db file to temporary file
+        # remove the functionality to load the database to the memory
+        # so that the database changes are persistent
         db = sqlite3.connect(db_file_path, check_same_thread=False)
         db.row_factory = self._sqllite_dict_factory
         # db.cursor().executescript(tempfile.read())
@@ -132,9 +134,11 @@ class JSONLookupDomain(Domain):
             for key, val in constraints.items():
                 if not first:
                     query += " AND "
+                # split values and look for partial match if multiple values possible
                 if key in ["types", "abilities", "weaknesses"]:
                     query += "{} LIKE '%{}%' COLLATE NOCASE".format(
                         key, "%".join(str(val).split(",")))
+                # normal matching for simple cases
                 else:
                     query += "{}='{}' COLLATE NOCASE".format(key, str(val))
                 first = False
